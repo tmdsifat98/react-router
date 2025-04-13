@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+nav a.active {
+  text-decoration: underline;
+  background-image: linear-gradient(45deg, rgb(17, 0, 255), rgb(255, 4, 222));
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+
