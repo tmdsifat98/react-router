@@ -8,7 +8,12 @@ import Headphone from "./Components/Headphone.jsx";
 import { StrictMode, Suspense } from "react";
 import Users from "./Components/Users.jsx";
 import UserDetails from "./Components/UserDetails.jsx";
+import Posts from "./Components/Posts.jsx";
+import PostDetails from "./Components/PostDetails.jsx";
 const userPromise = fetch("https://jsonplaceholder.typicode.com/users").then(
+  (res) => res.json()
+);
+const postPromise = fetch("https://jsonplaceholder.typicode.com/posts").then(
   (res) => res.json()
 );
 const router = createBrowserRouter([
@@ -36,6 +41,24 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`https://jsonplaceholder.typicode.com/users/${params.userId}`),
         Component: UserDetails,
+      },
+      {
+        path: "posts",
+        element: (
+          <Suspense
+            fallback={
+              <span className="loading loading-spinner text-secondary"></span>
+            }
+          >
+            <Posts postPromise={postPromise}></Posts>
+          </Suspense>
+        ),
+      },
+      {
+        path: "posts/:postId",
+        loader: ({params}) =>
+          fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`),
+        Component: PostDetails,
       },
     ],
   },
